@@ -12,7 +12,7 @@
 
 ### 步驟
 
-1. `git clone ssh://git@m.papy.com.tw:10022/jimmy_ko/graphql-server.git`
+1. `git clone https://github.com/jimmy010679/graphql-server`
 2. `cd graphql-server`
 3. `npm install`
 4. `node index.js`
