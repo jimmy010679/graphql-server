@@ -1,17 +1,17 @@
-const express = require('express');
-const cors = require('cors');
-const graphql = require('graphql');
-const sqlite3 = require('sqlite3').verbose();
-const { graphqlHTTP } = require('express-graphql');
+const express = require("express");
+const cors = require("cors");
+const graphql = require("graphql");
+const sqlite3 = require("sqlite3").verbose();
+const { graphqlHTTP } = require("express-graphql");
 
 const app = express();
-const database = new sqlite3.Database('./db.sqlite');
+const database = new sqlite3.Database("./db.sqlite");
 
 /* ----------------------------------------------------------------------------------------------
    GraphQL
 */
 const BookType = new graphql.GraphQLObjectType({
-  name: 'Book',
+  name: "Book",
   fields: {
     sid: { type: graphql.GraphQLID },
     name: { type: graphql.GraphQLString },
@@ -23,14 +23,14 @@ const BookType = new graphql.GraphQLObjectType({
 });
 
 var queryType = new graphql.GraphQLObjectType({
-  name: 'Query',
+  name: "Query",
   fields: {
     booksAll: {
       type: graphql.GraphQLList(BookType),
       resolve: (root, args, context, info) => {
         return new Promise((resolve, reject) => {
           database.all(
-            'SELECT * FROM books ORDER BY start DESC LIMIT 500;',
+            "SELECT * FROM books ORDER BY start DESC LIMIT 500;",
             function (err, rows) {
               if (err) {
                 reject([]);
@@ -52,7 +52,7 @@ var queryType = new graphql.GraphQLObjectType({
         let offsetCount = (page - 1) * 20;
         return new Promise((resolve, reject) => {
           database.all(
-            'SELECT * FROM books ORDER BY start DESC limit 20 offset (?);',
+            "SELECT * FROM books ORDER BY start DESC limit 20 offset (?);",
             [offsetCount],
             function (err, rows) {
               if (err) {
@@ -73,7 +73,7 @@ var queryType = new graphql.GraphQLObjectType({
       },
       resolve: (root, { sid }, context, info) => {
         return new Promise((resolve, reject) => {
-          database.all('SELECT * FROM books WHERE sid = (?);', [sid], function (
+          database.all("SELECT * FROM books WHERE sid = (?);", [sid], function (
             err,
             rows
           ) {
@@ -97,21 +97,23 @@ const schema = new graphql.GraphQLSchema({
 */
 const corsOptions = {
   origin: [
-    'http://www.example.com',
-    'http://192.168.66.165:8000',
-    'http://localhost:8000',
-    'http://localhost',
+    "http://www.example.com",
+    "http://192.168.66.165:8000",
+    "http://192.168.66.165:8080",
+    "http://localhost:8080",
+    "http://localhost:8000",
+    "http://localhost",
 
-    'https://gatsby.kyjhome.com/',
-    'http://gatsby.kyjhome.com/',
+    "https://gatsby.kyjhome.com/",
+    "http://gatsby.kyjhome.com/",
   ],
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
-  allowedHeaders: ['Content-Type', 'Authorization'],
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
+  allowedHeaders: ["Content-Type", "Authorization"],
 };
 app.use(cors(corsOptions));
 
 app.use(
-  '/graphql',
+  "/graphql",
   graphqlHTTP({
     schema: schema,
     graphiql: true,
