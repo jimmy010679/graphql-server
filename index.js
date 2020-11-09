@@ -92,16 +92,8 @@ const schema = new graphql.GraphQLSchema({
   query: queryType,
 });
 
-app.use(
-  '/graphql',
-  graphqlHTTP({
-    schema: schema,
-    graphiql: true,
-  })
-);
-
 /* ----------------------------------------------------------------------------------------------
-   CORS
+   CORS & graphql use
 */
 const corsOptions = {
   origin: [
@@ -117,6 +109,14 @@ const corsOptions = {
   allowedHeaders: ['Content-Type', 'Authorization'],
 };
 app.use(cors(corsOptions));
+
+app.use(
+  '/graphql',
+  graphqlHTTP({
+    schema: schema,
+    graphiql: true,
+  })
+);
 
 /* ----------------------------------------------------------------------------------------------
    Listen
