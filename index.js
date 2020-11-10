@@ -100,8 +100,10 @@ const corsOptions = {
     "http://www.example.com",
     "http://192.168.66.165:8000",
     "http://192.168.66.165:8080",
-    "http://localhost:8080",
+    "http://192.168.66.165:9000",
     "http://localhost:8000",
+    "http://localhost:8080",
+    "http://localhost:9000",
     "http://localhost",
 
     "https://gatsby.kyjhome.com/",
