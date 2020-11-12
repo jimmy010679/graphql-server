@@ -30,7 +30,7 @@ var queryType = new graphql.GraphQLObjectType({
       resolve: (root, args, context, info) => {
         return new Promise((resolve, reject) => {
           database.all(
-            "SELECT * FROM books ORDER BY start DESC LIMIT 500;",
+            "SELECT * FROM books ORDER BY sid DESC LIMIT 500;",
             function (err, rows) {
               if (err) {
                 reject([]);
@@ -52,7 +52,7 @@ var queryType = new graphql.GraphQLObjectType({
         let offsetCount = (page - 1) * 20;
         return new Promise((resolve, reject) => {
           database.all(
-            "SELECT * FROM books ORDER BY start DESC limit 20 offset (?);",
+            "SELECT * FROM books ORDER BY sid DESC limit 20 offset (?);",
             [offsetCount],
             function (err, rows) {
               if (err) {
