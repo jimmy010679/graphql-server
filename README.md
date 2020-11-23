@@ -1,6 +1,6 @@
 # GraphQL (use Node.js + Express)
 
-## 測試用
+## 模擬環境用
 
 ### Packages
 
